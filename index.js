@@ -4,8 +4,8 @@
 ------------------------------------------------------- */
 
 const express = require("express");
-const app = express();
 const morgan = require("morgan");
+const app = express();
 
 /* ------------------------------------------------------- */
 require("dotenv").config();
@@ -18,23 +18,37 @@ require("express-async-errors");
 
 const { dbConnection } = require("./src/configs/dbConnection");
 dbConnection();
+
 /* -------------------------------------------------------------------------- */
 /*                               MIDDLEWARES                                  */
 /* -------------------------------------------------------------------------- */
 app.use(express.json());
-app.use(morgan("dev"));
 
 app.use(require("./src/middlewares/findSearchSortPagi"));
+
+app.use(require("./src/middlewares/authentication"));
+
+app.use(require("./src/middlewares/logging"));
+app.use(morgan("dev"));
+
 /* -------------------------------------------------------------------------- */
 /*                               ROUTES                                       */
 /* -------------------------------------------------------------------------- */
 
 app.all("/", (req, res) => {
   res.send({
-    message: "<h1>Welcome to the Hotel API</h1>",
+    error: false,
+    message: "Welcome to HOTEL API",
+    docs: {
+      swagger: "/documents/swagger",
+      redoc: "/documents/redoc",
+      json: "/documents/json",
+    },
     user: req.user,
   });
 });
+
+// console.log("668a947fda3efd683614df26" + Date.now());
 
 app.use("/", require("./src/routes/"));
 
@@ -51,7 +65,7 @@ app.use((req, res, next) => {
 app.use(require("./src/middlewares/errorHandler"));
 
 // RUN SERVER:
-app.listen(PORT, () => console.log(`App running on port ${PORT}`));
+app.listen(PORT, () => console.log(`App running on http://127.0.0.1:${PORT}`));
 
 /* ------------------------------------------------------- */
 

@@ -1,24 +1,25 @@
 # HotelAPI
+This document provides a comprehensive guide to the tasks and models required for a hotel reservation system. The system encompasses functionalities for user management, room management, and reservation management, ensuring a smooth and efficient process for both administrators and users.
 
 ### ERD:
 
 ![ERD](./erdHotelApi.png)
 
-# Otel Rezervasyon Sistemi Görevleri
+# Hotel Reservation System Tasks
 
-## Kullanıcı Modeli (User)
+## User Model
 
-1. Kullanıcı Kaydı Oluşturma:
+1. User Registration:
 
-- [ ] Bir kullanıcı, sistemde yeni bir hesap oluşturabilir.
-- [ ] Kullanıcı adı, şifre ve e-posta adresi gereklidir.
-- [ ] Şifre en az 8 karakter uzunluğunda olmalı ve büyük/küçük harf, rakam ve özel karakter içermelidir.
-- [ ] E-posta adresi geçerli bir formatta olmalıdır.
-- [ ] Kullanıcı kaydedildiğinde şifre şifrelenmeli ve veritabanına öyle kaydedilmelidir.
+- [ ] A user can create a new account in the system.
+- [ ] A username, password, and email address are required.
+- [ ] The password must be at least 8 characters long and contain uppercase/lowercase letters, numbers, and special characters.
+- [ ] The email address must be in a valid format.
+- [ ] When a user is registered, the password should be encrypted and stored in the database.
 
 ```json
 {
-  "task": "Kullanıcı Kaydı",
+  "task": "User Registration",
   "data": {
     "username": "john_doe",
     "password": "Password123!",
@@ -27,14 +28,14 @@
 }
 ```
 
-2. Kullanıcı Girişi:
+2. User Login:
 
-- [ ] Kayıtlı bir kullanıcı, username/email ve şifresi ile sisteme giriş yapar.
-- [ ] Giriş yaparken, şifrenin doğruluğu kontrol edilmelidir.
+- [ ] A registered user can log in with their username/email and password.
+- [ ] The password should be verified upon login.
 
 ```json
 {
-  "task": "Kullanıcı Girişi",
+  "task": "User Login",
   "data": {
     "username": "john_doe",
     "password": "Password123!"
@@ -46,7 +47,7 @@ or
 
 ```json
 {
-  "task": "Kullanıcı Girişi",
+  "task": "User Login",
   "data": {
     "email": "john_doe@gmail.com",
     "password": "Password123!"
@@ -54,15 +55,15 @@ or
 }
 ```
 
-3. Kullanıcı Bilgilerini Güncelleme
+3. Update User Information:
 
-- [ ] Bir kullanıcı, kendi bilgilerini günceller (e-posta adresi veya şifre).
-- [ ] Yeni şifre belirtilen kurallara uygun olmalıdır.
-- [ ] E-posta adresi geçerli bir formatta olmalıdır.
+- [ ] A user can update their own information (email address or password).
+- [ ] The new password must comply with the specified rules.
+- [ ] The email address must be in a valid format.
 
 ```json
 {
-  "task": "Kullanıcı Bilgilerini Güncelleme",
+  "task": "Update User Information",
   "data": {
     "userId": "60b6a9f1e1d1b24bfc13e0a8",
     "email": "new_email@example.com",
@@ -71,17 +72,17 @@ or
 }
 ```
 
-## Oda Modeli (Room)
+## Room Model
 
-4. Oda Oluşturma
+4.  Create Room:
 
-- [ ] Admin yetkisine sahip bir kullanıcı, sisteme yeni bir oda ekler.
-- [ ] Oda numarası, yatak türü ve fiyat bilgileri gereklidir.
-- [ ] Oda numarası benzersiz olmalıdır.
+- [ ] A user with admin privileges can add a new room to the system.
+- [ ] A room number, bed type, and price are required.
+- [ ] The room number must be unique.
 
 ```json
 {
-  "task": "Oda Oluşturma",
+  "task": "Create Room",
   "data": {
     "roomNumber": 101,
     "image": "room101.jpg",
@@ -91,14 +92,14 @@ or
 }
 ```
 
-5. Oda Bilgilerini Güncelleme
+5. Update Room Information:
 
-- [ ] Admin yetkisine sahip bir kullanıcı, var olan bir odanın bilgilerini günceller (fiyat, yatak türü vb.).
-      Not: Oda ID'si gereklidir.
+- [ ] A user with admin privileges can update the information of an existing room (price, bed type, etc.).
+      Note: The room ID is required.
 
 ```json
 {
-  "task": "Oda Bilgilerini Güncelleme",
+  "task": "Update Room Information",
   "data": {
     "roomId": "60b6a9f1e1d1b24bfc13e0a9",
     "bedType": "Medium Bed",
@@ -107,17 +108,17 @@ or
 }
 ```
 
-## Rezervasyon Modeli (Reservation)
+## Reservation Model
 
-6. Rezervasyon Oluşturma
+6. Create Reservation:
 
-- [ ] Bir kullanıcı, belirli bir tarihler arasında bir oda için rezervasyon yapar.
-- [ ] Kullanıcı ID'si, oda ID'si, varış ve ayrılış tarihleri, misafir sayısı ve gece sayısı bilgileri gereklidir.
-- [ ] Toplam fiyat gece sayısı ile oda fiyatının çarpımı olarak hesaplanmalıdır
+- [ ] A user can make a reservation for a room for specific dates.
+- [ ] User ID, room ID, arrival and departure dates, guest number, and number of nights are required.
+- [ ] The total price should be calculated by multiplying the number of nights by the room price.
 
 ```json
 {
-  "task": "Rezervasyon Oluşturma",
+  "task": "Create Reservation",
   "data": {
     "userId": "60b6a9f1e1d1b24bfc13e0a8",
     "roomId": "60b6a9f1e1d1b24bfc13e0a9",
@@ -130,40 +131,45 @@ or
 }
 ```
 
-7. Rezervasyon İptal Etme
+7. Cancel Reservation:
 
-- [ ] Bir kullanıcı, belirli bir rezervasyonu iptal eder.
-      Not: Rezervasyon ID'si gereklidir
+- [ ] A user can cancel a specific reservation.
+      Note: The reservation ID is required.
 
 ```json
 {
-  "task": "Rezervasyon İptal Etme",
+  "task": "Cancel Reservation",
   "data": {
     "reservationId": "60b6a9f1e1d1b24bfc13e0aa"
   }
 }
 ```
 
-## Ekstra Görevler
+## Additional Tasks
 
-8. Kullanıcıları Listeleme
+8. List Users:
 
-- [ ] Admin yetkisine sahip bir kullanıcı, sistemdeki tüm kullanıcıları listeler.
-
-```json
-{
-  "task": "Kullanıcıları Listeleme"
-}
-```
-
-9. Rezervasyonları Listeleme
-
-- [ ] Admin yetkisine sahip bir kullanıcı, tüm rezervasyonları listeler.
+- [ ] A user with admin privileges can list all users in the system.
 
 ```json
 {
-  "task": "Rezervasyonları Listeleme"
+  "task": "List Users"
 }
 ```
 
-[View Postman Documentation](https://documenter.getpostman.com/view/32987022/2sA3e48oQX)
+9. List Reservations:
+
+- [ ] A user with admin privileges can list all reservations.
+
+```json
+{
+  "task": "List Reservations"
+}
+```
+
+## Documentations
+
+[View Postman Documentation]()
+[View Swagger Documentation]()
+[View Redoc Documentation]()
+[View Json Documentation]()

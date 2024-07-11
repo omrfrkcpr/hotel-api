@@ -6,13 +6,13 @@ const router = require("express").Router();
 /* ------------------------------------------------------- */
 const user = require("../controllers/userController");
 const idValidation = require("../middlewares/idValidation");
+const permission = require("../middlewares/permissions");
 
-//^ "/users"
+router.route("/").get(permission.isAdmin, user.list).post(user.create);
 
-router.route("/").get(user.list).post(user.create);
 router
   .route("/:id")
-  .all(idValidation)
+  .all(idValidation, permission.isLogin)
   .get(user.read)
   .put(user.update)
   .patch(user.update)
