@@ -47,6 +47,9 @@ app.all("/", (req, res) => {
   });
 });
 
+// static root
+app.use("/uploads", express.static("./uploads"));
+
 // console.log("668a947fda3efd683614df26" + Date.now());
 
 app.use("/", require("./src/routes/"));
