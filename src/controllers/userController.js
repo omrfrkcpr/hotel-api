@@ -1,4 +1,5 @@
 "use strict";
+const sendMail = require("../helpers/sendMail");
 /* -------------------------------------------------------
     EXPRESS - HOTEL API
 ------------------------------------------------------- */
@@ -34,6 +35,15 @@ module.exports = {
             #swagger.summary = "Create User"
         */
     const newUser = await User.create(req.body);
+
+    sendMail(
+      newUser.email,
+      "Welcome to the HOTEL!",
+      `Hi, ${
+        (newUser, req.body.username)
+      }. Thank you for creating an account on our website.`
+    );
+
     res.status(201).send({
       error: false,
       newUser,
